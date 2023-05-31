@@ -6,4 +6,4 @@ ENV
 .ENV
 VENV
 .VENV
-__pycache__.py
+__pycache__
