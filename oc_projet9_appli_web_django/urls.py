@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordChangeDoneView
+from django.contrib.auth.views import LoginView, LogoutView
 import authentication.views
 import litreview.views
 
@@ -14,12 +14,6 @@ urlpatterns = [
         redirect_authenticated_user=True
     ), name="login"),
     path('logout/', LogoutView.as_view(), name="logout"),
-    path('password_change', PasswordChangeView.as_view(
-        template_name="authentication/password_change.html"
-    ), name="password_change"),
-    path('password_change_done', PasswordChangeDoneView.as_view(
-        template_name="authentication/password_change_done.html"
-    ), name="password_change_done"),
     path("signin/", authentication.views.signin, name="signin"),
     path("subscriptions/", litreview.views.subscriptions, name="subscriptions"),
     path("feed/", litreview.views.feed, name="feed"),
