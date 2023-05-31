@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}SUPPRIMER VOTRE TICKET{% endblock title %}
+
+{% block content %}
+<section class="ticket_section">
+  <div class="ticket_container">
+    <h2>Supprimer votre ticket {{ ticket.title }}</h2>
+    <form class="form" action="#" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="buttons_container">
+        <button type="submit" name="button">Supprimer</button>
+      </div>
+    </form>
+  </div>
+</section>
+{% endblock content %}

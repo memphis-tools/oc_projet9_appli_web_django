@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}SIGNIN{% endblock title %}
+
+{% block content %}
+<div class="section_signin_container">
+  <div class="signin_container">
+    <h2>Inscrivez-vous</h2>
+    <form class="" action="" method="post">
+      {% csrf_token %}
+      <input type="text" name="username" placeholder="Nom d'utilisateur">
+      <input type="password" name="password1" placeholder="Mot de passe">
+      <input type="password" name="password2" placeholder="Confirmer mot de passe">
+      <div class="button_container">
+        <a href="{% url 'feed' %}">Retourner</a>
+        <button type="submit">S'inscrire</button>
+    </div>
+    </form>
+  </div>
+</div>
+{% endblock content %}

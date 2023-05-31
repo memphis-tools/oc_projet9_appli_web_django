@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}CREER UN TICKET{% endblock title %}
+
+{% block content %}
+<section class="ticket_section">
+  <div class="ticket_container">
+    <h2>Créer un ticket</h2>
+    <form class="form" action="#" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {% include "litreview/partials/ticket_form_snippet.html" with ticket=ticket_creation_form%}
+      <div class="buttons_container">
+        <button type="submit" name="button">Envoyer</button>
+      </div>
+    </form>
+  </div>
+</section>
+{% endblock content %}

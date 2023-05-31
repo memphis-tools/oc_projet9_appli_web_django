@@ -1,0 +1,9 @@
+env
+.env
+venv
+.venv
+ENV
+.ENV
+VENV
+.VENV
+__pycache__.py

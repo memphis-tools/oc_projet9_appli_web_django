@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load litreview_extras %}
+
+{% block title %}SUBSCRIPTIONS{% endblock title %}
+
+{% block content %}
+<div class="section_container">
+    <div class="following_container">
+      <h2>Suivre d'autres utilisateurs</h2>
+      <form class="form" method="post">
+        {% csrf_token %}
+        {{ follow_form.as_table }}
+        <input type="text" name="username" placeholder="Nom d'utilisateur" required>
+        <button type="submit">Envoyer</button>
+      </form>
+    </div>
+    <div class="subscriptions_container">
+      <h2>Abonnements</h2>
+      {% if subscriptions|length > 0 %}
+        <table>
+          {% for subscription in subscriptions %}
+          <tr>
+            <td>{{ subscription.followed_user }}</td>
+            <td>
+              <form class="" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="username" value="{{ subscription.followed_user }}">
+                {{ unsubscribe_form }}
+                <button type="subscribe" name="button">Désabonner</button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </table>
+      {% else %}
+      <p>Pas d'abonnements pour le moment</p>
+      {% endif %}
+    </div>
+    <div class="followers_container">
+      <h2>Abonnés</h2>
+      {% if followers|length > 0 %}
+        {% for follower in followers %}
+          <table>
+            <tr>
+              <td>{{ follower.user }}</td>
+            </tr>
+          </table>
+        {% endfor %}
+      {% else %}
+        <p>Pas d'abonnés pour le moment</p>
+      {% endif %}
+    </div>
+</div>
+{% endblock content %}

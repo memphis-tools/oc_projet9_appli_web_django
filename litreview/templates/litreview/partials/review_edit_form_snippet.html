@@ -1,0 +1,28 @@
+{% load static %}
+<div class="review_container">
+  <p>Vous êtes en train de poster en réponse à</p>
+  <div class="original_ticket_container">
+    <div class="instance_container">
+    {% include "litreview/partials/ticket_snippet.html" with ticket=review.ticket %}
+    </div>
+  </div>
+  <p>Critique</p>
+  <div class="review_creation_form_items_container">
+    <p>Titre</p>
+    <input class="review_input" type="text" name="headline" value="{{ review.headline }}">
+    <p>Note</p>
+    <div class="rating_container">
+      <p><input type="radio" id="rating_0" name="rating" value="0" {% if review.rating == 0 %}checked="checked"{% endif %}> - 0</p>
+      <p><input type="radio" id="rating_1" name="rating" value="1" {% if review.rating == 1 %}checked="checked"{% endif %}> - 1</p>
+      <p><input type="radio" id="rating_2" name="rating" value="2" {% if review.rating == 2 %}checked="checked"{% endif %}> - 2</p>
+      <p><input type="radio" id="rating_3" name="rating" value="3" {% if review.rating == 3 %}checked="checked"{% endif %}> - 3</p>
+      <p><input type="radio" id="rating_4" name="rating" value="4" {% if review.rating == 4 %}checked="checked"{% endif %}> - 4</p>
+      <p><input type="radio" id="rating_5" name="rating" value="5" {% if review.rating == 5 %}checked="checked"{% endif %}> - 5</p>
+    </div>
+    <p>Commentaire</p>
+    <textarea class="review_input" name="body" rows="8" cols="80">{{ review.body }}</textarea>
+  </div>
+  <div class="buttons_container">
+    <button type="submit" name="button">Envoyer</button>
+  </div>
+</div>

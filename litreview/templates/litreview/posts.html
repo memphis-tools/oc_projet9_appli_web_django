@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load litreview_extras %}
+
+{% block title %}POSTS{% endblock title %}
+
+{% block content %}
+<section class="posts_section">
+  <div class="posts_container">
+    <h2>Vos posts</h2>
+    {% for post in page_obj %}
+      <div class="post_container">
+        {% if post|get_instance_type == "Ticket" %}
+          {% include "litreview/partials/ticket_snippet.html" with ticket=post %}
+          <div class="buttons_container">
+            <a href="{% url 'change_ticket' post.id %}">Modifier</a>
+            <a href="{% url 'delete_ticket' post.id %}">Supprimer</a>
+          </div>
+        {% elif post|get_instance_type == "Review" %}
+          {% include "litreview/partials/review_snippet.html" with review=post %}
+          <div class="buttons_container">
+            <a href="{% url 'change_review' post.id %}">Modifier</a>
+            <a href="{% url 'delete_review' post.id %}">Supprimer</a>
+          </div>
+        {% endif %}
+      </div>
+    {% endfor %}
+    <div class="paginator_container">
+      {% include 'litreview/partials/page_navigator.html' %}
+    </div>
+  </div>
+</section>
+{% endblock content %}

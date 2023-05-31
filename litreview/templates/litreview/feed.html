@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load litreview_extras %}
+
+{% block title %}FLUX{% endblock title %}
+
+{% block content %}
+<section class="feed_section">
+  <div class="feed_container">
+    <div class="feed_headers_buttons_container">
+      <a class="litreview_button" href="{% url 'add_ticket' %}">Demander une critique</a>
+      <a class="litreview_button" href="{% url 'add_review' %}">Créer une critique</a>
+    </div>
+    <div class="items_container">
+    {% for instance in page_obj %}
+      {% if instance|get_instance_type == "Ticket" %}
+        <div class="instance_container">
+          {% include 'litreview/partials/ticket_snippet.html' with ticket=instance %}
+          {% if not instance.has_been_reviewed %}
+            <div class="buttons_container">
+              <a href="{% url 'add_response_review' instance.id %}">Créer une critique</a>
+            </div>
+          {% endif %}
+        </div>
+      {% elif instance|get_instance_type == "Review" %}
+        <div class="instance_container">
+          {% include 'litreview/partials/review_snippet.html' with review=instance %}
+        </div>
+      {% endif %}
+    {% endfor %}
+    <div class="paginator_container">
+      {% include 'litreview/partials/page_navigator.html' %}
+    </div>
+    </div>
+  </div>
+</section>
+{% endblock content %}

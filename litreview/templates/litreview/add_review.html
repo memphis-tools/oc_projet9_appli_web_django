@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}CREER UNE CRITIQUE{% endblock title %}
+
+{% block content %}
+<h2>Créer une critique</h2>
+<section class="review_section">
+  <div class="review_container">
+    <form class="form" action="#" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <p>Livre / Article</p>
+      {% include "litreview/partials/ticket_form_snippet.html" %}
+      <p>Critique</p>
+      {% include "litreview/partials/review_form_snippet.html" %}
+    </form>
+  </div>
+</section>
+{% endblock content %}

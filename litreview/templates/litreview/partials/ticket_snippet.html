@@ -1,0 +1,13 @@
+{% load litreview_extras %}
+
+<div class="instance_header_container">
+    <p class="instance_user">{% format_author ticket.user %} demandé une critique</p>
+    <p class="instance_date">{{ ticket.time_created|format_time_created }}</p>
+</div>
+<div class="instance_body_container">
+  <p>{{ ticket.title }}</p>
+  <p>{{ ticket.description }}</p>
+  {% if ticket.image %}
+    <img src="{{ ticket.image.url }}" alt="">
+  {% endif %}
+</div>

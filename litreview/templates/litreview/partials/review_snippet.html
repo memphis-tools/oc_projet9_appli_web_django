@@ -1,0 +1,32 @@
+{% load static %}
+{% load litreview_extras %}
+
+<div class="instance_header_container">
+    <p class="instance_user">{% format_author review.user %} publié une critique</p>
+    <p class="instance_date">{{ review.time_created|format_time_created }}</p>
+</div>
+<div class="review_body_container">
+  <div class="star_rating_container">{{ review.headline }} -
+  {% for rate in review.rating|times %}
+    <img class="star_icon" src="{% static 'vendors/iconfinder/full_star_icon.png' %}" alt="">
+  {% endfor  %}
+  {% for rate in review.rating|subtract|times %}
+    <img class="star_icon" src="{% static 'vendors/iconfinder/empty_star_icon.png' %}" alt="">
+  {% endfor  %}
+  </div>
+  <p>{{ review.body }}</p>
+</div>
+<div class="request_container">
+  <div class="ticket_body_container">
+    <p>{{ review.ticket.title }}</p>
+    <p>{{ review.ticket.description }}</p>
+    {% if review.ticket.image %}
+      <img src="{{ review.ticket.image.url }}" alt="">
+    {% endif %}
+    {% if not review.ticket.has_been_reviewed %}
+      <div class="buttons_container">
+        <a href="{% url 'add_response_review' review.ticket.id %}">Créer une critique</a>
+      </div>
+    {% endif %}
+</div>
+</div>

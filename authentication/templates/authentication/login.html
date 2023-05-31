@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}LOGIN{% endblock title %}
+
+{% block content %}
+<div class="section_container">
+  <div class="auth_container">
+    <div class="signin_container">
+      <h2>Inscrivez-vous maintenant</h2>
+      <a class="litreview_button" href="{% url 'signin' %}">S'inscrire</a>
+    </div>
+    <div class="login_container">
+      <h2>Connectez-vous</h2>
+      <form class="form" method="post">
+        {% csrf_token %}
+        <input type="text" name="username" placeholder="Nom d'utilisateur">
+        <input type="password" name="password" placeholder="Mot de passe">
+        <div class="button_container">
+          <button type="submit">Se connecter</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock content %}

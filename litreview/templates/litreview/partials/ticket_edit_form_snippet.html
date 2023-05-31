@@ -1,0 +1,10 @@
+<div class="ticket_creation_form_items_container">
+  <p>Titre</p>
+  <input class="review_input" type="text" name="title" value="{{ ticket.title }}">
+  <p>Description</p>
+  <textarea class="review_input" name="description" rows="8" cols="80">{{ ticket.description }}</textarea>
+  <p>Image</p>
+  <input type="file" name="image" id="btn_img" class="btn_img" hidden>
+  <label for="btn_img" onclick="update_chosen_file()">Télécharger fichier</label>
+  <span id="chosen_file">{{ ticket.image }}</span>
+</div>
