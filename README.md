@@ -30,3 +30,34 @@ Application permettant à une communauté d'utilisateurs de consulter ou de soll
 
       `python ./manage.py runserver`
 
+4. Run app from scratch
+
+      `python ./run_app_from_scratch.py`
+
+      and then run app (but do not 'git add' unless you forked !)
+	
+      `python ./manage.py runserver`
+
+## Comment fonctionne l'application ?
+C'est une application WEB, dépourvue d'API. On demeure dans un cas d'exemple, de développement.
+
+On simule une application utile à une communauté qui souhaite échanger des avis à propos de livres publiés (tout format).
+
+Les publications possibles se décomposent en des demandes de critiques ('tickets'), et en des expressions de critiques ('reviews').
+
+A 1 ticket correspond 1 critique.
+
+Chaque utilisateur peut s'abonner ou se désabonner des publications d'un autre utilisateur.
+
+Deux profils utilisateurs sont prévus, mais il n'y a pas de prérogatives ou contraintes implémentées pour le moment.
+
+Un utilisateur non connecté ne peut avoir accès qu'aux pages d'authentification /d'enregistrement.
+
+Un utilisateur connecté peut ajouter un ticket, une critique en réponse à un ticket, ou enfin un 'couple ticket-critique'.
+
+Un utilisateur connecté peut accéder à ses seules publications ("posts"). De plus, il peut modifier ou supprimer chacunes d'entre elles.
+
+Une image n'est pas indispensable pour créer un ticket. 
+
+Une critique implique une notation graduée de 0 (le plus bas) à 5.
+
