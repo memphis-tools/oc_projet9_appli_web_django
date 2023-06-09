@@ -88,11 +88,12 @@ def change_review(request, id):
 @login_required
 def delete_review(request, id):
     review = Review.objects.get(id=id)
-    ticket = Ticket.objects.get(review.ticket)
+    ticket = Ticket.objects.get(id=review.ticket.id)
     if request.method == "POST":
         if review.user == request.user:
             review.delete()
             ticket.has_been_reviewed = False
+            ticket.save()
             messages.success(request, message="Critique supprimée")
             return redirect("feed")
     return render(request, "litreview/delete_review.html", context={"review": review})
