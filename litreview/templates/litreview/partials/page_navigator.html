@@ -2,11 +2,17 @@
   {% if page_obj.has_previous %}
     <a href="?page=1">Premiers</a>
     <a href="?page={{ page_obj.previous_page_number }}">Précédents</a>
+  {% else %}
+    <a href="#">Premiers</a>
+    <a href="#">Précédents</a>
   {% endif %}
 </span>
 <span>
   {% if page_obj.has_next %}
     <a href="?page={{ page_obj.next_page_number }}">Prochains</a>
     <a href="?page={{ page_obj.paginator.num_pages }}">Derniers</a>
+  {% else %}
+    <a href="#">Prochains</a>
+    <a href="#">Derniers</a>
   {% endif %}
 </span>
