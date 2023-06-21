@@ -91,3 +91,4 @@ MEDIA_ROOT = 'media/'
 
 # Custom
 MAX_ITEMS_PER_PAGE = 5
+IMAGE_PREFERED_SIZE = (300, 425)

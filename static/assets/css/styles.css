@@ -273,6 +273,7 @@ table tr,
 
 .ticket_body_container {
   width: 75%;
+  font-size: 0.9em;
 }
 
 .instance_container,
@@ -338,6 +339,14 @@ table tr,
 
 .instance_container .request_container {
   padding-bottom: 2%;
+}
+
+.ticket_body_container .instance_header_container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
 }
 
 /* --- ADDREVIEW PAGE --- */
