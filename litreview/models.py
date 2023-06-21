@@ -11,11 +11,10 @@ class Ticket(models.Model):
     image = models.ImageField(null=True, blank=True)
     time_created = models.DateTimeField(auto_now_add=True)
     has_been_reviewed = models.BooleanField(default=False)
-    IMAGE_PREFERED_SIZE = (300, 425)
 
     def _resize_image(self):
         image = Image.open(self.image)
-        image.thumbnail(self.IMAGE_PREFERED_SIZE)
+        image.thumbnail(settings.IMAGE_PREFERED_SIZE)
         image.save()
 
     def __save__(self, *args, **kwargs):

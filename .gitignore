@@ -7,3 +7,4 @@ ENV
 VENV
 .VENV
 __pycache__
+.github

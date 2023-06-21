@@ -32,9 +32,7 @@ Application permettant à une communauté d'utilisateurs de consulter ou de soll
 
 4. Run app from scratch
 
-      `python ./run_app_from_scratch.py`
-
-      and then run app (but do not 'git add' unless you forked !)
+      `python ./manage.py init_app_litreview`
 	
       `python ./manage.py runserver`
 

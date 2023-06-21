@@ -18,6 +18,10 @@
 </div>
 <div class="request_container">
   <div class="ticket_body_container">
+    <div class="instance_header_container">
+        <p class="instance_user">{% format_author review.ticket.user %} demandé une critique</p>
+        <p class="instance_date">{{ review.ticket.time_created|format_time_created }}</p>
+    </div>
     <p>{{ review.ticket.title }}</p>
     <p>{{ review.ticket.description }}</p>
     {% if review.ticket.image %}
