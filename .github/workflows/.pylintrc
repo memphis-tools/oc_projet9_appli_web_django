@@ -1,0 +1,2 @@
+[MASTER]
+ignore-patterns=(.)*/migrations/000(.)*\.py
