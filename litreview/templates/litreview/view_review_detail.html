@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load litreview_extras %}
+
+{% block title %}S'ABONNER POUR VOIR CRITIQUE{% endblock title %}
+
+{% block content %}
+<section class="feed_section">
+  <div class="feed_container">
+  <div class="items_container">
+    <div class="instance_container">
+      <div class="instance_header_container">
+          <p class="instance_user">{% format_author review.user %} publié une critique</p>
+          <p class="instance_date">{{ review.time_created|format_time_created }}</p>
+      </div>
+      <div class="review_body_container">
+        {% if not followed_user %}
+        <form class="form" method="post">
+          {% csrf_token %}
+          <input type="hidden" name="follow_user" id="{{ review.user.id }}">
+          <button type="submit">S'abonner à {{ review.user|title }}</button>
+        </form>
+        {% endif %}
+        <div class="star_rating_container">{{ review.headline }} -
+        {% for rate in review.rating|times %}
+          <img class="star_icon" src="{% static 'vendors/iconfinder/full_star_icon.png' %}" alt="">
+        {% endfor  %}
+        {% for rate in review.rating|subtract|times %}
+          <img class="star_icon" src="{% static 'vendors/iconfinder/empty_star_icon.png' %}" alt="">
+        {% endfor  %}
+        </div>
+        <p>{{ review.body }}</p>
+      </div>
+      <div class="request_container">
+        <div class="ticket_body_container">
+          <div class="instance_header_container">
+            <p class="instance_user">{% format_author review.ticket.user %} demandé une critique</p>
+            <p class="instance_date">{{ review.ticket.time_created|format_time_created }}</p>
+          </div>
+          <p>{{ review.ticket.title }}</p>
+          <p>{{ review.ticket.description }}</p>
+          {% if review.ticket.image %}
+            <img src="{{ review.ticket.image.url }}" alt="">
+          {% endif %}
+          </div>
+        </div>
+        <div class="buttons_container">
+          <a href="{% url 'feed' %}">Retour au flux</a>
+        </div>
+      </div>
+  </div>
+  </div>
+</section>
+{% endblock content %}
+{% load litreview_extras %}

@@ -1,7 +1,0 @@
-[MASTER]
-ignore=CVS,.svn,.git
-ignore-patterns=(.)*/migrations/000(.)*\.py
-
-[FORMAT]
-max-line-length=119
-

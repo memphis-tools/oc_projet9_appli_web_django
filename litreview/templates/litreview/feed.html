@@ -20,6 +20,10 @@
             <div class="buttons_container">
               <a href="{% url 'add_response_review' instance.id %}">Créer une critique</a>
             </div>
+          {% else %}
+            <div class="buttons_container">
+              <a href="{% url 'subscribe_to_see_review' instance.id %}">Voir la critique</a>
+            </div>
           {% endif %}
         </div>
       {% elif instance|get_instance_type == "Review" %}
@@ -28,9 +32,11 @@
         </div>
       {% endif %}
     {% endfor %}
+    {% if page_obj|length > 0%}
     <div class="paginator_container">
       {% include 'litreview/partials/page_navigator.html' %}
     </div>
+    {% endif %}
     </div>
   </div>
 </section>

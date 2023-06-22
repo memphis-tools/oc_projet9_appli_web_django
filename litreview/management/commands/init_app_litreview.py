@@ -156,7 +156,7 @@ class Command(BaseCommand):
                 """,
             user=user,
             image="./odyssee_des_fourmis.jpg",
-            has_been_reviewed=True
+            has_been_reviewed=False
         )
         ticket.save()
 
@@ -174,7 +174,7 @@ class Command(BaseCommand):
                 """,
             user=user,
             image="./grandes_dates_histoires_du_monde.jpg",
-            has_been_reviewed=True
+            has_been_reviewed=False
         )
         ticket.save()
 
@@ -190,7 +190,7 @@ class Command(BaseCommand):
                 """,
             user=user,
             image="./art_de_moucher_les_facheux.jpg",
-            has_been_reviewed=True
+            has_been_reviewed=False
         )
         ticket.save()
 
@@ -207,7 +207,7 @@ class Command(BaseCommand):
                 """,
             user=user,
             image="./geostrategix.jpg",
-            has_been_reviewed=True
+            has_been_reviewed=False
         )
         ticket.save()
 
@@ -216,7 +216,7 @@ class Command(BaseCommand):
         img.thumbnail(settings.IMAGE_PREFERED_SIZE)
         img = img.save(fp="./media/art_de_la_guerre.jpg")
         ticket = Ticket.objects.create(
-            title="Vu Geostrategix, Intéressant et accessible ?",
+            title="Vu Art de la guerre, un remake de Sun Tzu ?",
             description="""
                 Interdum et malesuada fames ac ante ipsum primis in faucibus.
                 Ut gravida dapibus dictum. Morbi quis faucibus augue.
@@ -225,7 +225,7 @@ class Command(BaseCommand):
                 """,
             user=user,
             image="./art_de_la_guerre.jpg",
-            has_been_reviewed=True
+            has_been_reviewed=False
         )
         ticket.save()
         print(f"{Fore.GREEN}[DUMMY TICKETS CREATED]{Style.RESET_ALL}")
@@ -284,5 +284,7 @@ class Command(BaseCommand):
             user=user,
         )
         review.save()
+        ticket.has_been_reviewed=True
+        ticket.save()
 
         print(f"{Fore.GREEN}[DUMMY REVIEWS CREATED]{Style.RESET_ALL}")

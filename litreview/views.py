@@ -3,15 +3,22 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Q
-from itertools import chain
 from django.core.paginator import Paginator
-from . import forms
+from django.core.exceptions import ObjectDoesNotExist
+from itertools import chain
+
 from authentication.models import User, UserFollows
 from litreview.models import Ticket, Review
+from . import forms
 
 
 @login_required
 def feed(request):
+    """
+    Description: vue pour la page accueil avec critiques et les demandes de critiques.
+    Paramètre(s):
+    - request: le paramètre par défaut indispensable
+    """
     tickets = Ticket.objects.filter(Q(user__in=request.user.abonnements.all()) | Q(user=request.user))
     reviews = Review.objects.filter(Q(user__in=request.user.abonnements.all()) | Q(user=request.user))
     tickets_and_reviews = sorted(chain(tickets, reviews), key=lambda instance: instance.time_created, reverse=True)
@@ -23,6 +30,11 @@ def feed(request):
 
 @login_required
 def posts(request):
+    """
+    Description: vue pour les seules publications de l'utilisateur connecté.
+    Paramètre(s):
+    - request: le paramètre par défaut indispensable
+    """
     tickets = Ticket.objects.filter(Q(user=request.user))
     reviews = Review.objects.filter(Q(user=request.user))
     posts = sorted(chain(tickets, reviews), key=lambda instance: instance.time_created, reverse=True)
@@ -34,6 +46,11 @@ def posts(request):
 
 @login_required
 def add_ticket(request):
+    """
+    Description: vue pour la page d'ajout d'une demande de critique.
+    Paramètre(s):
+    - request: le paramètre par défaut indispensable
+    """
     ticket_creation_form = forms.TicketCreationForm()
     if request.method == "POST":
         ticket_creation_form = forms.TicketCreationForm(request.POST, request.FILES)
@@ -48,6 +65,12 @@ def add_ticket(request):
 
 @login_required
 def change_ticket(request, id):
+    """
+    Description: vue pour la page de modification d'une demande de critique.
+    Paramètre(s):
+    - request: le paramètre par défaut indispensable
+    - id: un entier qui représente l'id de la demande de critique
+    """
     ticket = Ticket.objects.get(id=id)
     ticket_creation_form = forms.TicketCreationForm(instance=ticket)
     if request.method == "POST":
@@ -62,6 +85,12 @@ def change_ticket(request, id):
 
 @login_required
 def delete_ticket(request, id):
+    """
+    Description: vue pour la page de suppression d'une demande de critique.
+    Paramètre(s):
+    - request: le paramètre par défaut indispensable
+    - id: un entier qui représente l'id de la demande de critique
+    """
     ticket = Ticket.objects.get(id=id)
     if request.method == "POST":
         if ticket.user == request.user:
@@ -73,6 +102,12 @@ def delete_ticket(request, id):
 
 @login_required
 def change_review(request, id):
+    """
+    Description: vue pour la page de modification d'une critique.
+    Paramètre(s):
+    - request: le paramètre par défaut indispensable
+    - id: un entier qui représente l'id de la critique
+    """
     review = Review.objects.get(id=id)
     review_creation_form = forms.ReviewCreationForm(instance=review)
     if request.method == "POST":
@@ -87,6 +122,12 @@ def change_review(request, id):
 
 @login_required
 def delete_review(request, id):
+    """
+    Description: vue pour la page de suppression d'une critique.
+    Paramètre(s):
+    - request: le paramètre par défaut indispensable
+    - id: un entier qui représente l'id de la critique
+    """
     review = Review.objects.get(id=id)
     ticket = Ticket.objects.get(id=review.ticket.id)
     if request.method == "POST":
@@ -101,6 +142,11 @@ def delete_review(request, id):
 
 @login_required
 def add_review(request):
+    """
+    Description: vue pour l'ajout à la fois d'une demande de critique et la critique elle même.
+    Paramètre(s):
+    - request: le paramètre par défaut indispensable
+    """
     ticket_creation_form = forms.TicketCreationForm()
     review_creation_form = forms.ReviewCreationForm()
     context = {"ticket_creation_form": ticket_creation_form, "review_creation_form": review_creation_form}
@@ -126,6 +172,12 @@ def add_review(request):
 
 @login_required
 def add_response_review(request, id):
+    """
+    Description: vue pour l'ajout d'une critique à une demande.
+    Paramètre(s):
+    - request: le paramètre par défaut indispensable
+    - id: un entier qui représente l'id de la demande de critique
+    """
     ticket = get_object_or_404(Ticket, id=id)
     ticket_creation_form = forms.TicketCreationForm(instance=ticket)
     review_creation_form = forms.ReviewCreationForm()
@@ -151,35 +203,85 @@ def add_response_review(request, id):
 
 
 @login_required
+def subscribe_to_see_review(request, id):
+    """
+    Description: vue pour permettre de voir une critique si elle est formulée par un
+    utilisateur non suivi.
+    Paramètre(s):
+    - request: le paramètre par défaut indispensable
+    - id: un entier qui représente l'id de la demande de critique
+    """
+    ticket = get_object_or_404(Ticket, id=id)
+    review = Review.objects.get(ticket=ticket)
+    review_author = review.user
+    form = forms.UserFollowForm()
+    username_searched = review_author.username
+    followed_user = UserFollows.objects.filter(user=request.user.id, followed_user=review_author)
+    
+    if request.method == "POST":
+        form = forms.UserFollowForm(request.POST)
+        followed_user = User.objects.get(username=username_searched.lower())
+        user_follow = UserFollows(user=request.user, followed_user=followed_user)
+        try:
+            user_follow.save()
+            request.user.save()
+            User.objects.get(username=username_searched.lower()).save()
+            messages.success(request, message="Abonnement pris en compte")
+        except:
+            messages.warning(request, message="Vous êtes déjà abonné")
+
+        return redirect("feed")
+
+    context = {"review": review, "ticket": ticket, "form": form, "followed_user": followed_user}
+    return render(request, "litreview/view_review_detail.html", context=context)
+
+@login_required
 def subscriptions(request):
+    """
+    Description: vue pour la page abonnements.
+    Paramètre(s):
+    - request: le paramètre par défaut indispensable
+    """
     follow_form = forms.UserFollowForm()
     unsubscribe_form = forms.UnsubscribeForm()
     if request.method == "POST":
         if "follow_user" in request.POST:
             form = forms.UserFollowForm(request.POST)
-            if form.is_valid():
+            if form.is_valid() and form.cleaned_data:
                 if request.POST["username"] != "":
                     username_searched = request.POST["username"]
-                    followed_user = User.objects.get(username=username_searched.lower())
-                    user_follow = UserFollows(user=request.user, followed_user=followed_user)
-                    if followed_user.username == request.user:
+                    try:
+                        followed_user = User.objects.get(username=username_searched.lower())
+                    except ObjectDoesNotExist:
+                        messages.error(request, message="Utilisateur non trouvé")
                         return redirect("feed")
-                    if followed_user is not None:
+
+                    user_follow = UserFollows(user=request.user, followed_user=followed_user)
+                    if followed_user.username == request.user.username:
+                        messages.warning(request, message="Inutile de vous abonner à vous même")
+                        return redirect("feed")
+
+                    try:
                         user_follow.save()
                         request.user.save()
                         User.objects.get(username=username_searched.lower()).save()
                         messages.success(request, message="Abonnement pris en compte")
-                        return redirect("feed")
+                    except:
+                        messages.warning(request, message="Vous êtes déjà abonné")
+                    return redirect("feed")
         elif "unsubscribe_user" in request.POST:
             form = forms.UnsubscribeForm(request.POST)
             if form.is_valid():
                 if request.POST["username"] != "":
                     username_searched = request.POST["username"].lower()
-                    followed_user = User.objects.get(username=username_searched)
-                    user_follow = UserFollows.objects.get(user=request.user, followed_user=followed_user)
-                    user_follow.delete()
-                    messages.success(request, message="Désabonnement pris en compte")
-                    return redirect("feed")
+                    try:
+                        followed_user = User.objects.get(username=username_searched)
+                        user_follow = UserFollows.objects.get(user=request.user, followed_user=followed_user)
+                        user_follow.delete()
+                        messages.success(request, message="Désabonnement pris en compte")
+                        return redirect("feed")
+                    except:
+                        messages.error(request, message="Utilisateur non trouvé")
     user_subscriptions = request.user.following.all().exclude(followed_user=request.user)
     user_followers = request.user.followed_by.all().exclude(user=request.user)
     context = {

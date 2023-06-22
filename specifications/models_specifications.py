@@ -4,11 +4,17 @@ from django.db import models
 
 
 class Ticket(models.Model):
+    """
+    Description: modèle fourni dans l'énoncé de l'exercice
+    """
     # Your Ticket model definition goes here
     pass
 
 
 class Review(models.Model):
+    """
+    Description: modèle fourni dans l'énoncé de l'exercice
+    """
     ticket = models.ForeignKey(to=Ticket, on_delete=models.CASCADE)
     rating = models.PositiveSmallIntegerField(
         # validates that rating must be between 0 and 5
@@ -21,6 +27,9 @@ class Review(models.Model):
 
 
 class UserFollows(models.Model):
+    """
+    Description: modèle fourni dans l'énoncé de l'exercice
+    """
     # Your UserFollows model definition goes here
 
     class Meta:
