@@ -19,9 +19,16 @@ def feed(request):
     Paramètre(s):
     - request: le paramètre par défaut indispensable
     """
-    tickets = Ticket.objects.filter(Q(user__in=request.user.abonnements.all()) | Q(user=request.user))
-    reviews = Review.objects.filter(Q(user__in=request.user.abonnements.all()) | Q(user=request.user))
-    tickets_and_reviews = sorted(chain(tickets, reviews), key=lambda instance: instance.time_created, reverse=True)
+    tickets_qset = Ticket.objects.filter(Q(user__in=request.user.abonnements.all()) | Q(user=request.user))
+    reviews_qset_temp = Review.objects.filter(Q(user__in=request.user.abonnements.all()) | Q(user=request.user))
+    reviews_qset = []
+    for review in reviews_qset_temp:
+        if review.ticket.user in request.user.abonnements.all() or review.ticket.user == request.user:
+            reviews_qset.append(review)
+
+    tickets_and_reviews = sorted(
+        chain(tickets_qset, reviews_qset), key=lambda instance: instance.time_created, reverse=True
+    )
     paginator = Paginator(tickets_and_reviews, settings.MAX_ITEMS_PER_PAGE)
     page = request.GET.get("page")
     page_obj = paginator.get_page(page)
