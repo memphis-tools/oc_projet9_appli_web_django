@@ -1,33 +1,43 @@
 {% extends 'base.html' %}
+{% load bootstrap5 %}
+{% load bootstrap_icons %}
 {% load static %}
 {% load litreview_extras %}
 
 {% block title %}POSTS{% endblock title %}
 
 {% block content %}
-<section class="posts_section">
-  <div class="posts_container">
-    <h2>Vos posts</h2>
-    {% for post in page_obj %}
-      <div class="post_container">
-        {% if post|get_instance_type == "Ticket" %}
-          {% include "litreview/partials/ticket_snippet.html" with ticket=post %}
-          <div class="buttons_container">
-            <a href="{% url 'change_ticket' post.id %}">Modifier</a>
-            <a href="{% url 'delete_ticket' post.id %}">Supprimer</a>
+<div class="container">
+      <div class="d-flex flex-column">
+          <h2>Vos contributions</h2>
+          {% for post in page_obj %}
+              <div class="py-2 container d-flex flex-column">
+                {% if post|get_instance_type == "Ticket" %}
+                    {% include "litreview/partials/ticket_snippet.html" with ticket=post %}
+                    <div class="pb-3 d-flex border-bottom justify-content-end">
+                      <div class="d-flex justify-content-between">
+                          <div class="">
+                              <a class="btn btn-primary text-decoration-none" href="{% url 'change_ticket' post.id %}">Modifier</a>
+                              <a class="btn btn-primary text-decoration-none" href="{% url 'delete_ticket' post.id %}">Supprimer</a>
+                          </div>
+                      </div>
+                    </div>
+                {% elif post|get_instance_type == "Review" %}
+                    {% include "litreview/partials/review_snippet.html" with review=post %}
+                    <div class="pb-3 d-flex border-bottom justify-content-end">
+                        <div class="d-flex justify-content-between">
+                            <div class="">
+                                <a class="btn btn-primary text-decoration-none" href="{% url 'change_review' post.id %}">Modifier</a>
+                                <a class="btn btn-primary text-decoration-none" href="{% url 'delete_review' post.id %}">Supprimer</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+              </div>
+          {% endfor %}
+          <div class="paginator_container d-flex flex-row flex-md-column">
+              {% include 'litreview/partials/page_navigator.html' %}
           </div>
-        {% elif post|get_instance_type == "Review" %}
-          {% include "litreview/partials/review_snippet.html" with review=post %}
-          <div class="buttons_container">
-            <a href="{% url 'change_review' post.id %}">Modifier</a>
-            <a href="{% url 'delete_review' post.id %}">Supprimer</a>
-          </div>
-        {% endif %}
-      </div>
-    {% endfor %}
-    <div class="paginator_container">
-      {% include 'litreview/partials/page_navigator.html' %}
     </div>
-  </div>
-</section>
+</div>
 {% endblock content %}

@@ -1,36 +1,47 @@
 {% load static %}
+{% load bootstrap5 %}
+{% load bootstrap_icons %}
 {% load litreview_extras %}
 
-<div class="instance_header_container">
-    <p class="instance_user">{% format_author review.user %} publié une critique</p>
-    <p class="instance_date">{{ review.time_created|format_time_created }}</p>
-</div>
-<div class="review_body_container">
-  <div class="star_rating_container">{{ review.headline }} -
-  {% for rate in review.rating|times %}
-    <img class="star_icon" src="{% static 'vendors/iconfinder/full_star_icon.png' %}" alt="">
-  {% endfor  %}
-  {% for rate in review.rating|subtract|times %}
-    <img class="star_icon" src="{% static 'vendors/iconfinder/empty_star_icon.png' %}" alt="">
-  {% endfor  %}
-  </div>
-  <p>{{ review.body }}</p>
-</div>
-<div class="request_container">
-  <div class="ticket_body_container">
-    <div class="instance_header_container">
-        <p class="instance_user">{% format_author review.ticket.user %} demandé une critique</p>
-        <p class="instance_date">{{ review.ticket.time_created|format_time_created }}</p>
+<div class="py-4 d-flex flex-column">
+    <div class="d-flex flex-row fw-bold">
+        <div class="col-6 d-flex justify-content-start">
+            <p class="instance_user">{% format_author review.user %} publié une critique</p>
+        </div>
+        <div class="col-6 d-flex justify-content-end">
+            <p class="instance_date">{{ review.time_created|format_time_created }}</p>
+        </div>
     </div>
-    <p>{{ review.ticket.title }}</p>
-    <p>{{ review.ticket.description }}</p>
-    {% if review.ticket.image %}
-      <img src="{{ review.ticket.image.url }}" alt="">
-    {% endif %}
-    {% if not review.ticket.has_been_reviewed %}
-      <div class="buttons_container">
-        <a href="{% url 'add_response_review' review.ticket.id %}">Créer une critique</a>
-      </div>
-    {% endif %}
-</div>
+    <div class="review_body_container border-bottom">
+        <div class="star_rating_container d-flex flex-row justify-content-start align-items-center">{{ review.headline }} -
+        {% for rate in review.rating|times %}
+          {% bs_icon 'star-fill' color='yellow' %}
+        {% endfor  %}
+        {% for rate in review.rating|subtract|times %}
+          {% bs_icon 'star' %}
+        {% endfor  %}
+        </div>
+        <p>{{ review.body }}</p>
+    </div>
+
+    <div class="ticket_body_container">
+          <div class="d-flex flex-row fw-bold">
+              <div class="col-6 d-flex justify-content-start">
+                  <p class="instance_user">{% format_author review.ticket.user %} demandé une critique</p>
+              </div>
+              <div class="col-6 d-flex justify-content-end">
+                  <p class="instance_date">{{ review.ticket.time_created|format_time_created }}</p>
+              </div>
+          </div>
+          <p>{{ review.ticket.title }}</p>
+          <p>{{ review.ticket.description }}</p>
+          {% if review.ticket.image %}
+            <img class="img-fluid" width="25%" src="{{ review.ticket.image.url }}" alt="">
+          {% endif %}
+          {% if not review.ticket.has_been_reviewed %}
+            <div class="buttons_container">
+              <a class="btn btn-primary text-decoration-none px-3" href="{% url 'add_response_review' review.ticket.id %}">Créer une critique</a>
+            </div>
+          {% endif %}
+    </div>
 </div>
