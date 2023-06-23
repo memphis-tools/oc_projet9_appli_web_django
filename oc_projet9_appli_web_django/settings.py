@@ -15,7 +15,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'authentication',
     'litreview',
-    'bootstrap4',
+    'django_bootstrap_icons',
+    'bootstrap5',
 ]
 
 MIDDLEWARE = [

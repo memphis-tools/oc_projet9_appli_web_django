@@ -1,49 +1,55 @@
 {% extends 'base.html' %}
+{% load bootstrap5 %}
+{% load bootstrap_icons %}
 {% load static %}
 {% load litreview_extras %}
 
 {% block title %}SUBSCRIPTIONS{% endblock title %}
 
 {% block content %}
-<div class="section_container">
-    <div class="following_container">
-      <h2>Suivre d'autres utilisateurs</h2>
-      <form class="form" method="post">
-        {% csrf_token %}
-        {{ follow_form.as_table }}
-        <input type="text" name="username" placeholder="Nom d'utilisateur" required>
-        <button type="submit">Envoyer</button>
-      </form>
+<div class="container py-5">
+    <div class="">
+        <div class="d-flex flex-column align-items-center">
+            <h2 class="fw-bold">Suivre d'autres utilisateurs</h2>
+        </div>
+        <div class="d-flex flex-row justify-content-center">
+            <form class="d-flex form" method="post">
+              {% csrf_token %}
+              {% bootstrap_form follow_form %}
+              <input type="text" class="form-control" name="username" placeholder="Nom d'utilisateur" required>
+              {% bootstrap_button button_type="submit" content="Envoyer" %}
+            </form>
+        </div>
     </div>
-    <div class="subscriptions_container">
-      <h2>Abonnements</h2>
-      {% if subscriptions|length > 0 %}
-        <table>
-          {% for subscription in subscriptions %}
-          <tr>
-            <td>{{ subscription.followed_user }}</td>
-            <td>
-              <form class="" method="post">
-                {% csrf_token %}
-                <input type="hidden" name="username" value="{{ subscription.followed_user }}">
-                {{ unsubscribe_form }}
-                <button type="subscribe" name="button">Désabonner</button>
-              </form>
-            </td>
-          </tr>
-          {% endfor %}
-        </table>
-      {% else %}
-      <p>Pas d'abonnements pour le moment</p>
-      {% endif %}
+    <div class="d-flex flex-column align-items-center">
+        <h2 class="fw-bold">Abonnements</h2>
+        {% if subscriptions|length > 0 %}
+          <table class="table table-borderless d-flex flex-column align-items-center">
+            {% for subscription in subscriptions %}
+            <tr class="py-0 d-flex flex-row align-items-baseline">
+              <td class="px-1 border-none">{{ subscription.followed_user|title }}</td>
+              <td class="">
+                <form class="" method="post">
+                  {% csrf_token %}
+                  <input class="w-25" type="hidden" name="username" value="{{ subscription.followed_user }}">
+                  {{ unsubscribe_form }}
+                  {% bootstrap_button button_type="submit" content="Désabonner" %}
+                </form>
+              </td>
+            </tr>
+            {% endfor %}
+          </table>
+        {% else %}
+          <p>Pas d'abonnements pour le moment</p>
+        {% endif %}
     </div>
-    <div class="followers_container">
-      <h2>Abonnés</h2>
+    <div class="d-flex flex-column align-items-center">
+      <h2 class="fw-bold">Abonnés</h2>
       {% if followers|length > 0 %}
         {% for follower in followers %}
           <table>
             <tr>
-              <td>{{ follower.user }}</td>
+              <td>{{ follower.user|title }}</td>
             </tr>
           </table>
         {% endfor %}

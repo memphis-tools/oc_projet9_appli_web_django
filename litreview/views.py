@@ -60,6 +60,8 @@ def add_ticket(request):
             ticket_form.save()
             messages.success(request, message="Ticket publié")
             return redirect("feed")
+        else:
+            messages.error(request, message="Vérifier votre saisie et que le fichier téléversé est une image")
     return render(request, "litreview/add_ticket.html", context={"ticket_creation_form": ticket_creation_form})
 
 
@@ -94,6 +96,7 @@ def delete_ticket(request, id):
     ticket = Ticket.objects.get(id=id)
     if request.method == "POST":
         if ticket.user == request.user:
+            ticket.image.delete()
             ticket.delete()
             messages.success(request, message="Ticket supprimé")
             return redirect("feed")
@@ -167,6 +170,8 @@ def add_review(request):
                 review_form.save()
                 messages.success(request, message="Requête et critique ajoutées")
                 return redirect("feed")
+        else:
+            messages.error(request, message="Vérifier votre saisie et que le fichier téléversé est une image")
     return render(request, "litreview/add_review.html", context=context)
 
 
@@ -216,8 +221,11 @@ def subscribe_to_see_review(request, id):
     review_author = review.user
     form = forms.UserFollowForm()
     username_searched = review_author.username
-    followed_user = UserFollows.objects.filter(user=request.user.id, followed_user=review_author)
-    
+    if request.user.username == username_searched:
+        followed_user = True
+    else:
+        followed_user = UserFollows.objects.filter(user=request.user.id, followed_user=review_author)
+
     if request.method == "POST":
         form = forms.UserFollowForm(request.POST)
         followed_user = User.objects.get(username=username_searched.lower())

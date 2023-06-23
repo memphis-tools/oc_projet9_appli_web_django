@@ -1,430 +1,51 @@
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
+body {
+  font-family: 'Raleway', sans-serif;
+}
+
+.subscriptions_container table td {
+  width: 120px;
+}
+
+@media (max-width: 328px) {
+  header {
+    margin-top: 10px;
+    padding-bottom: 5px;
+    transition-duration: 0.7s;
+  }
+
+  #brand_logo {
+    width: 70px;
+    transition-duration: 0.7s;
+  }
+}
+
+@media (max-width: 576px) {
+  header {
+    margin-top: 10px;
+    padding-bottom: 5px;
+    transition-duration: 0.7s;
+  }
+
+  #brand_logo {
+    width: 110px;
+    transition-duration: 0.7s;
+  }
+}
+
+@media (max-width: 768px) {
+  header {
+    margin-top: 80px;
+    padding-bottom: 5px;
+    transition-duration: 0.7s;
+  }
+
+  #brand_logo {
+    width: 120px;
+    transition-duration: 0.7s;
+  }
 }
 
 header {
-  margin: 20px 0;
-}
-
-/* --- NAVBAR --- */
-nav {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: baseline;
-  margin-top: 20px;
-  border-bottom: 1px solid black;
-  width: 100%;
-}
-
-nav a:hover,
-nav a:focus {
-  background-color: #FFFFFF;
-  text-decoration: underline;
-}
-
-.nav_interlayer {
-  display: flex;
-  flex: 3;
-}
-
-.logo_container {
-  display: flex;
-  flex-direction: row;
-  text-align: center;
-  flex: 6;
-  justify-content: center;
-}
-
-.navbar_container {
-  display: flex;
-  flex: 3;
-  flex-wrap: nowrap;
-  text-align: right;
-}
-
-.navbar_container a{
-  text-decoration: none;
-  color: #000000;
-  padding-right: 15px;
-}
-
-/* --- COMMONS --- */
- h2 {
-   text-align: center;
- }
-
-.signin_container a,
-.section_signin_container a,
-.posts_section a,
-.feed_container a {
-   text-align: center;
-   text-decoration: none;
-   color: #000000;
-   padding: 5px 5px;
-   border: 1px solid black;
-   border-radius: 10px;
-   width: 150px;
-}
-
-a:focus,
-a:hover,
-button:focus,
-button:hover,
-label:focus,
-label:hover {
-  background-color: #E4DCCF;
-}
-
-button {
-  text-align: center;
-  text-decoration: none;
-  color: #000000;
-  padding: 5px 5px;
-  border: 1px solid black;
-  border-radius: 10px;
-  background-color: #FFFFFF;
-}
-
-.login_container button,
-.section_signin_container button,
-.following_container button {
-  width: 150px;
-}
-
-img {
-  max-width: 300px;
-  max-height: 425px;
-  padding: 0 0 2% 2%;
-}
-
-.star_icon {
-  width: 25px;
-  height: auto;
-}
-
-.star_rating_container {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: flex-start;
-  padding-bottom: 2%;
-}
-
-::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color: black;
-  opacity: 1; /* Firefox */
-}
-
-:-ms-input-placeholder { /* Internet Explorer 10-11 */
-  color: black;
-}
-
-::-ms-input-placeholder { /* Microsoft Edge */
-  color: black;
-}
-
-table, td {
-  width: 75%;
-  border: 1px solid black;
-  color: black;
-  padding: 5px 0px;
-}
-
-table tr,
-.login_container form input,
-.ticket_body_container .buttons_container {
-  width: 100%;
-}
-
-.auth_container input,
-.signin_container input {
-  margin-bottom: 10px;
-  text-align: center;
-  color: #000000;
-}
-
-.auth_container,
-.posts_section,
-.feed_section,
-.instance_header_container,
-.review_body_container,
-.request_container,
-.ticket_section,
-.review_section,
-.rating_container,
-.ticket_container .buttons_container,
-.section_signin_container .button_container {
-  display: flex;
-  flex-direction: row;
- }
-
-/* --- LOGIN PAGE --- */
-.auth_container {
   margin-top: 100px;
-  flex-wrap: nowrap;
-  justify-content: space-around;
-}
-
-.login_container form {
-  padding-top: 5%;
-}
-
-.login_container .button_container{
-  display: flex;
-  justify-content: flex-end;
-}
-
-.signin_container,
-.login_container,
-.section_signin_container,
-.section_signin_container .signin_container,
-.section_signin_container .signin_container form,
-.following_container,
-.subscriptions_container,
-.followers_container   {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-/* --- SIGNIN PAGE --- */
-.section_signin_container .signin_container {
-   width: 75%;
- }
-
-.section_signin_container .signin_container form input{
-   width: 200%;
- }
-
-.section_signin_container .button_container {
-   width: 200%;
-   margin-top: 5%;
-   justify-content: flex-end;
-   align-items: flex-end;
- }
-
-.section_signin_container a {
-   margin-right: 2%;
- }
-
-/* --- SUBSCRIPTIONS PAGE --- */
-.following_container form{
-   width: 75%;
-   display: flex;
-   flex-direction: row;
-   justify-content: center;
-   align-items: baseline;
-   flex-wrap: nowrap;
- }
-
-.following_container input{
-   width: 75%;
-   margin-right: 5%;
- }
-
-.subscriptions_container td:first-child {
-  width: 85%;
-}
-
-.subscriptions_container td:last-child {
-  width: 15%;
-  text-align: center;
-}
-
-.subscriptions_container button,
-.ticket_creation_form_items_container button,
-.review_creation_form_items_container button {
-   border: None;
-   background-color: #ffffff;
- }
-
-/* --- FEED AND POSTS PAGE --- */
-.feed_headers_buttons_container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-
-}
-.feed_headers_buttons_container a{
-  width: 45%;
-  padding: 5px 35px;
-  border-radius: 5px;
-}
-.posts_section,
-.feed_section {
-   justify-content: center;
-   align-items: center;
-   flex-wrap: nowrap;
- }
-
-.posts_container,
-.feed_container {
-   width: 65%;
- }
-
-.posts_section a,
-.feed_container a {
-  margin-right: 2%;
-}
-
-.ticket_body_container {
-  width: 75%;
-  font-size: 0.9em;
-}
-
-.instance_container,
-.ticket_body_container,
-.posts_container .post_container {
-  border: 1px solid black;
-  margin-top: 2%;
-}
-
-.instance_header_container,
-.review_body_container {
-  justify-content: space-between;
-}
-
-.instance_body_container,
-.ticket_body_container,
-.review_body_container  {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  justify-content: flex-start;
-  align-items: flex-start;
-}
-
-.request_container {
-  justify-content: center;
-}
-
-.instance_header_container {
-  padding-top: 1%;
-}
-
-.instance_header_container .instance_date {
-  padding-right: 2%;
-}
-
-.feed_section .buttons_container,
-.ticket_container .buttons_container,
-.review_container .buttons_container,
-.posts_container .buttons_container {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  padding: 0 2% 2% 0;
-}
-
-.paginator_container {
-  padding: 2% 0% 2% 0%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-
-}
-
-.paginator_container span{
-  display: flex;
-  flex-direction: row;
-}
-
-.posts_container .buttons_container{
-  padding: 2% 0%;
-}
-
-.instance_container .request_container {
-  padding-bottom: 2%;
-}
-
-.ticket_body_container .instance_header_container {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: baseline;
-}
-
-/* --- ADDREVIEW PAGE --- */
-.ticket_section,
-.review_section {
-  justify-content: center;
-  align-items: center;
-}
-
-.review_container {
-  border: 1px solid black;
-}
-
-.review_input,
-.review_container textarea {
-  width: 95%;
-}
-
-.rating_container  {
-  margin: 0 4%;
-  flex-wrap: nowrap;
-  justify-content: space-around;
-}
-
-.review_section .ticket_creation_form_items_container {
-  border-bottom: 1px solid black;
-}
-
-.ticket_creation_form_items_container button,
-.review_creation_form_items_container button {
-  border: None;
-}
-
-.ticket_creation_form_items_container,
-.review_creation_form_items_container {
-  padding: 0 2% 2% 6%;
-}
-
-.ticket_container .buttons_container {
-  justify-content: flex-end;
-}
-
-.review_section,
-.ticket_container {
-  margin-bottom: 5%;
-}
-
-.review_section .buttons_container{
-  padding: 0 2% 3% 0;
-}
-
-.review_creation_form_items_container p,
-.ticket_creation_form_items_container p,
-.ticket_container p{
-  padding: 2% 0% 0 0;
-  margin: 0;
-}
-
-.buttons_container button {
-  padding: 5px 45px;
-}
-
-.ticket_creation_form_items_container label {
-  border: 1px solid black;
-  border-radius: 10px;
-  padding: 5px 25px;
-  cursor: pointer;
-}
-
-/* --- ADD RESPONSEREVIEW PAGE ---  */
-.original_ticket_container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-bottom: 5%;
-  border-bottom: 1px solid black;
-}
-
-.original_ticket_container .instance_container{
-  width: 85%;
+  transition-duration: 0.7s;
 }
