@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Q
 from django.core.paginator import Paginator
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from itertools import chain
 
 from authentication.models import User, UserFollows
@@ -242,13 +242,14 @@ def subscribe_to_see_review(request, id):
             request.user.save()
             User.objects.get(username=username_searched.lower()).save()
             messages.success(request, message="Abonnement pris en compte")
-        except:
+        except ObjectDoesNotExist:
             messages.warning(request, message="Vous êtes déjà abonné")
 
         return redirect("feed")
 
     context = {"review": review, "ticket": ticket, "form": form, "followed_user": followed_user}
     return render(request, "litreview/view_review_detail.html", context=context)
+
 
 @login_required
 def subscriptions(request):
@@ -281,7 +282,7 @@ def subscriptions(request):
                         request.user.save()
                         User.objects.get(username=username_searched.lower()).save()
                         messages.success(request, message="Abonnement pris en compte")
-                    except:
+                    except ValidationError:
                         messages.warning(request, message="Vous êtes déjà abonné")
                     return redirect("feed")
         elif "unsubscribe_user" in request.POST:
@@ -295,7 +296,7 @@ def subscriptions(request):
                         user_follow.delete()
                         messages.success(request, message="Désabonnement pris en compte")
                         return redirect("feed")
-                    except:
+                    except ObjectDoesNotExist:
                         messages.error(request, message="Utilisateur non trouvé")
     user_subscriptions = request.user.following.all().exclude(followed_user=request.user)
     user_followers = request.user.followed_by.all().exclude(user=request.user)

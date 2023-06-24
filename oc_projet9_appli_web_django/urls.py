@@ -25,7 +25,9 @@ urlpatterns = [
     path("review/<int:id>/change", litreview.views.change_review, name="change_review"),
     path("review/<int:id>/delete", litreview.views.delete_review, name="delete_review"),
     path("review/<int:id>/add", litreview.views.add_response_review, name="add_response_review"),
-    path("review/<int:id>/get", litreview.views.subscribe_to_see_review,
+    path(
+        "review/<int:id>/get",
+        litreview.views.subscribe_to_see_review,
         name="subscribe_to_see_review"),
 ]
 
