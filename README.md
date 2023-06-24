@@ -47,6 +47,8 @@ A 1 ticket correspond 1 critique.
 
 Chaque utilisateur peut s'abonner ou se désabonner des publications d'un autre utilisateur.
 
+Il faut considérer en l'état qu'il n'y a qu'un seul admin, avec un id=1. Si démarrez l'appli from scratch, il faut en préambule créer ce compte admin.
+
 Deux profils utilisateurs sont prévus, mais il n'y a pas de prérogatives ou contraintes implémentées pour le moment.
 
 Un utilisateur non connecté ne peut avoir accès qu'aux pages d'authentification /d'enregistrement.

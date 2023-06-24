@@ -123,10 +123,11 @@ class Command(BaseCommand):
         print(f"{Fore.GREEN}[DUMMY USERS CREATED]{Style.RESET_ALL}")
 
         print(f"{Fore.YELLOW}[DUMMY SUBSCRIPTIONS CREATION]{Style.RESET_ALL}")
-        user = User.objects.get(id=2)
-        followed_user = User.objects.get(id=3)
-        user_follow = UserFollows(user=user, followed_user=followed_user)
-        user_follow.save()
+        for followed_id in ["3", "4"]:
+            user = User.objects.get(id=2)
+            followed_user = User.objects.get(id=followed_id)
+            user_follow = UserFollows(user=user, followed_user=followed_user)
+            user_follow.save()
 
         for followed_id in ["2", "4"]:
             user = User.objects.get(id=3)
@@ -142,36 +143,55 @@ class Command(BaseCommand):
         print(f"{Fore.GREEN}[DUMMY SUBSCRIPTIONS CREATED]{Style.RESET_ALL}")
 
         print(f"{Fore.YELLOW}[DUMMY TICKETS CREATION]{Style.RESET_ALL}")
-        # we create 2 ticket for user id=3 et id=4, mais 1 seul ticket pour user id=2
+        # we create 2 tickets for user id=2
+        # we create 5 tickets for user id=3
+        # we create 4 tickets for user id=4
+        # next we'll create 1 "ticket+review" for user id=2
         # keep in mind that user 1 is the default admin
+        # finally please notice that each declaration generates an incremental id (from 1 to n)
+
+        # USER 2
         user = User.objects.get(id=2)
         img = Image.open(r"./images_livres_echantillon/odyssee_des_fourmis.jpg")
         img.thumbnail(settings.IMAGE_PREFERED_SIZE)
         img = img.save(fp="./media/odyssee_des_fourmis.jpg")
         ticket = Ticket.objects.create(
             title="Vu Odyssée des fourmis, ça vaut le coup ?",
-            description="""
-                Pellentesque risus arcu, placerat vitae tempor nec, mattis sed massa.
-                Fusce purus tellus.
-                """,
+            description="Pellentesque risus arcu, placerat vitae tempor nec, mattis sed massa. \
+                Curabitur facilisis vestibulum vehicula. \
+                Fusce purus tellus.",
             user=user,
             image="./odyssee_des_fourmis.jpg",
             has_been_reviewed=False
         )
         ticket.save()
 
+        img = Image.open(r"./images_livres_echantillon/arabe_du_futur_6.jpg")
+        img.thumbnail(settings.IMAGE_PREFERED_SIZE)
+        img = img.save(fp="./media/arabe_du_futur_6.jpg")
+        ticket = Ticket.objects.create(
+            title="Vu l'édition 6, toujours un succès ?",
+            description="Far far away, behind the word mountains, far from the countries Vokalia \
+                and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove \
+                right at the coast of the Semantics, a large language ocean.",
+            user=user,
+            image="./arabe_du_futur_6.jpg",
+            has_been_reviewed=False
+        )
+        ticket.save()
+
+        # USER 3
         user = User.objects.get(id=3)
         img = Image.open(r"./images_livres_echantillon/grandes_dates_histoires_du_monde.jpg")
         img.thumbnail(settings.IMAGE_PREFERED_SIZE)
         img = img.save(fp="./media/grandes_dates_histoires_du_monde.jpg")
         ticket = Ticket.objects.create(
             title="Vu Grandes dates de l'histoire du monde, pas écrit trop petit ?",
-            description="""
-                Quisque malesuada dui nec eros dignissim condimentum.
-                Curabitur facilisis vestibulum vehicula.
-                Duis metus diam, dictum et egestas ut, sodales quis dolor.
-                Nunc a justo at ante consequat efficitur. Vestibulum maximus urna a sapien viverra malesuada.
-                """,
+            description="Quisque malesuada dui nec eros dignissim condimentum. \
+                Curabitur facilisis vestibulum vehicula. \
+                Duis metus diam, dictum et egestas ut, sodales quis dolor. \
+                Nunc a justo at ante consequat efficitur. Vestibulum maximus urna a sapien viverra malesuada.\
+                ",
             user=user,
             image="./grandes_dates_histoires_du_monde.jpg",
             has_been_reviewed=False
@@ -183,17 +203,68 @@ class Command(BaseCommand):
         img = img.save(fp="./media/art_de_moucher_les_facheux.jpg")
         ticket = Ticket.objects.create(
             title="Vu Art de moucher les facheux, Rigolo ?",
-            description="""
-                Praesent sagittis tellus eleifend mi accumsan ultrices.
-                Etiam id dolor sed lacus bibendum euismod ut ut ligula.
-                In iaculis venenatis sollicitudin. Morbi rhoncus ex magna.
-                """,
+            description="Praesent sagittis tellus eleifend mi accumsan ultrices. \
+                Etiam id dolor sed lacus bibendum euismod ut ut ligula. \
+                In iaculis venenatis sollicitudin. Morbi rhoncus ex magna. \
+                ",
             user=user,
             image="./art_de_moucher_les_facheux.jpg",
             has_been_reviewed=False
         )
         ticket.save()
 
+        img = Image.open(
+            r"./images_livres_echantillon/les-hommes-viennent-de-mars-les-femmes-viennent-de-venus.jpg"
+        )
+        img.thumbnail(settings.IMAGE_PREFERED_SIZE)
+        img = img.save(fp="./media/les-hommes-viennent-de-mars-les-femmes-viennent-de-venus.jpg")
+        ticket = Ticket.objects.create(
+            title="Vu le classique nouvelle édition, Enfin ?!",
+            description="Praesent sagittis tellus eleifend mi accumsan ultrices. \
+                Etiam id dolor sed lacus bibendum euismod ut ut ligula. \
+                In iaculis venenatis sollicitudin. Morbi rhoncus ex magna. \
+                ",
+            user=user,
+            image="./les-hommes-viennent-de-mars-les-femmes-viennent-de-venus.jpg",
+            has_been_reviewed=False
+        )
+        ticket.save()
+
+        img = Image.open(
+            r"./images_livres_echantillon/puce_a_oreille.jpg"
+        )
+        img.thumbnail(settings.IMAGE_PREFERED_SIZE)
+        img = img.save(fp="./media/puce_a_oreille.jpg")
+        ticket = Ticket.objects.create(
+            title="Vu encore un classique nouvelle édition, Quoi de neuf ?",
+            description="Sed ut perspiciatis unde omnis iste natus error sit voluptatem. \
+                laudantium, totam rem aperiam, quae ab illo inventore veritatis et quasi architecto beatae. \
+                Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit. \
+                ",
+            user=user,
+            image="./puce_a_oreille.jpg",
+            has_been_reviewed=False
+        )
+        ticket.save()
+
+        img = Image.open(
+            r"./images_livres_echantillon/lpic_coffret_1_2.jpg"
+        )
+        img.thumbnail(settings.IMAGE_PREFERED_SIZE)
+        img = img.save(fp="./media/lpic_coffret_1_2.jpg")
+        today_hour = datetime.now().hour
+        ticket = Ticket.objects.create(
+            title="Beaucoup critiqué mais a fait ses preuves juquà présent ?",
+            description="Sed facilis architecto aut enim delectus et maxime nesciunt. \
+                Ut magni dolores qui rerum nulla non dolorem voluptas qui rerum explicabo. \
+                Eos fugit eligendi vel consectetur sapientem ullam corporis repellendus.",
+            user=user,
+            image="./lpic_coffret_1_2.jpg",
+            has_been_reviewed=False,
+        )
+        ticket.save()
+
+        # USER 4
         user = User.objects.get(id=4)
         img = Image.open(r"./images_livres_echantillon/geostrategix.jpg")
         img.thumbnail(settings.IMAGE_PREFERED_SIZE)
@@ -225,6 +296,36 @@ class Command(BaseCommand):
                 """,
             user=user,
             image="./art_de_la_guerre.jpg",
+            has_been_reviewed=False
+        )
+        ticket.save()
+
+        user = User.objects.get(id=4)
+        img = Image.open(r"./images_livres_echantillon/sapiens_edition_2022.jpg")
+        img.thumbnail(settings.IMAGE_PREFERED_SIZE)
+        img = img.save(fp="./media/sapiens_edition_2022.jpg")
+        ticket = Ticket.objects.create(
+            title="Vu Sapiens nouvelle édition, mieux vaut la bd ?",
+            description="Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes. \
+                For nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque. \
+                Aenean massa. Cum es membres del sam fami liesociis natoque penatibus.",
+            user=user,
+            image="./sapiens_edition_2022.jpg",
+            has_been_reviewed=False
+        )
+        ticket.save()
+
+        user = User.objects.get(id=4)
+        img = Image.open(r"./images_livres_echantillon/le_monde_sans_fin.jpg")
+        img.thumbnail(settings.IMAGE_PREFERED_SIZE)
+        img = img.save(fp="./media/le_monde_sans_fin.jpg")
+        ticket = Ticket.objects.create(
+            title="Que de bonnes d'entendues, un 'must to have' ?",
+            description="Voluptatum deleniti atque corrupti, quos dolores et quas molestias . \
+                Nemo enim ipsam voluptatem, quia voluptas sit, aspernatur aut odit. \
+                Acilis est et expedita distinctio. Nam libero tempore, cum soluta.",
+            user=user,
+            image="./le_monde_sans_fin.jpg",
             has_been_reviewed=False
         )
         ticket.save()
@@ -268,6 +369,26 @@ class Command(BaseCommand):
         print(f"{Fore.GREEN}[DUMMY TICKET+REVIEW CREATED]{Style.RESET_ALL}")
 
         print(f"{Fore.YELLOW}[DUMMY REVIEWS CREATION]{Style.RESET_ALL}")
+        # user id=2 makes a review for user id=4
+        # the ticket id=8 is the first ticket created by user id=4
+        ticket = Ticket.objects.get(id=8)
+        user = User.objects.get(id=2)
+        review = Review.objects.create(
+            ticket=ticket,
+            rating="4",
+            headline="Lecture qui interpelle",
+            body="""
+                Suspendisse adipiscing elit, sed do eiusmod incididunt ut labore et dolore magna aliqua.
+                Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                Ut enim ad minim veniam,
+                Sint occaecat cupidatat ultricies justo.
+                """,
+            user=user,
+        )
+        review.save()
+        ticket.has_been_reviewed = True
+        ticket.save()
+
         # user id=3 makes a review for user id=2
         # the ticket id=1 is the one created by user id=2
         ticket = Ticket.objects.get(id=1)
@@ -284,7 +405,7 @@ class Command(BaseCommand):
             user=user,
         )
         review.save()
-        ticket.has_been_reviewed=True
+        ticket.has_been_reviewed = True
         ticket.save()
 
         print(f"{Fore.GREEN}[DUMMY REVIEWS CREATED]{Style.RESET_ALL}")
