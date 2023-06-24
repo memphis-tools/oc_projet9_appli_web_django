@@ -11,7 +11,7 @@
     <label for="title" class="form-label fw-light">Titre</label>
     <input class="form-control text-start" type="text" name="headline" value="{{ review.headline }}">
     <label for="rating" class="form-label fw-light">Note</label>
-    <div class="form-control d-flex flex-row justify-content-between">
+    <div class="d-flex flex-row justify-content-between">
       <p><input type="radio" id="rating_0" name="rating" value="0" {% if review.rating == 0 %}checked="checked"{% endif %}> - 0</p>
       <p><input type="radio" id="rating_1" name="rating" value="1" {% if review.rating == 1 %}checked="checked"{% endif %}> - 1</p>
       <p><input type="radio" id="rating_2" name="rating" value="2" {% if review.rating == 2 %}checked="checked"{% endif %}> - 2</p>

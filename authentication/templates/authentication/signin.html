@@ -6,8 +6,8 @@
 
 {% block content %}
 <div class="container">
-    <div class="row d-flex flex-row justify-content-center">
-        <div class="d-flex flex-row col-3 col-md-6 d-flex align-items-center py-5">
+    <div class="d-flex flex-row justify-content-center">
+        <div class="d-flex flex-column align-items-center py-3">
           <div class="d-flex flex-column">
               <h2>Inscrivez-vous</h2>
           </div>
@@ -18,7 +18,7 @@
                 {% bootstrap_button button_type="submit" content="S'enregistrer" %}
               </form>
           </div>
-              <a href="{% url 'feed' %}" class="btn btn-primary py-2 w-100" role="button">Retour page acceuil</a>
+              <a href="{% url 'feed' %}" class="btn btn-primary py-2 w-50" role="button">Retour page acceuil</a>
         </div>
     </div>
 </div>
