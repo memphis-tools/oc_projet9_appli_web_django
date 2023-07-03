@@ -277,6 +277,10 @@ def subscriptions(request):
                         messages.warning(request, message="Inutile de vous abonner à vous même")
                         return redirect("feed")
 
+                    if followed_user.username == "admin":
+                        messages.warning(request, message="Pas d'abonnement possible au compte admin")
+                        return redirect("feed")
+
                     try:
                         user_follow.save()
                         request.user.save()
