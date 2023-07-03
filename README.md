@@ -1,3 +1,4 @@
+![Screenshot](python-django.svg)
 # [OpenClassRoom](https://openclassrooms.com/) - Parcours développeur Python
 ![Screenshot](oc_parcours_dev_python.png)
 ## Projet 9 - Développer une application Web en utilisant Django
@@ -28,9 +29,12 @@ Application permettant à une communauté d'utilisateurs de consulter ou de soll
 
 3. Run app with default dummy database
 
+	You will find **3 users already created : donald, daisy and loulou**. You can choose to subscribe as new user.
+	In order to test features you will also find some dummy projects, reviews and tickets.
+
       `python ./manage.py runserver`
 
-4. Run app from scratch
+Optionnal - Run app from scratch
 
       `python ./manage.py init_app_litreview`
 	
@@ -47,7 +51,7 @@ A 1 ticket correspond 1 critique.
 
 Chaque utilisateur peut s'abonner ou se désabonner des publications d'un autre utilisateur.
 
-Il faut considérer en l'état qu'il n'y a qu'un seul admin, avec un id=1. Si démarrez l'appli from scratch, il faut en préambule créer ce compte admin.
+Il faut considérer en l'état qu'il n'y a qu'un seul admin, avec un id=1. Si vous démarrez l'appli from scratch, il faut en préambule créer ce compte admin.
 
 Deux profils utilisateurs sont prévus, mais il n'y a pas de prérogatives ou contraintes implémentées pour le moment.
 
