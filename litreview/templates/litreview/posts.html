@@ -38,9 +38,15 @@
                 {% endif %}
               </div>
           {% endfor %}
+          {% if page_obj|length > 0 %}
           <div class="paginator_container d-flex flex-row flex-md-column">
               {% include 'litreview/partials/page_navigator.html' %}
           </div>
+          {% else %}
+          <div class="d-flex flex-row justify-content-center">
+              <p>Vous n'avez pas encore de contributions.</p>
+          </div>
+          {% endif %}
     </div>
 </div>
 {% endblock content %}
