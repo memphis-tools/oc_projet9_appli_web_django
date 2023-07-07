@@ -286,7 +286,7 @@ def subscriptions(request):
                         request.user.save()
                         User.objects.get(username=username_searched.lower()).save()
                         messages.success(request, message="Abonnement pris en compte")
-                    except ValidationError:
+                    except Exception:
                         messages.warning(request, message="Vous êtes déjà abonné")
                     return redirect("feed")
         elif "unsubscribe_user" in request.POST:
