@@ -30,14 +30,22 @@ Application permettant à une communauté d'utilisateurs de consulter ou de soll
 3. Run app with default dummy database
 
 	You will find **3 users already created : donald, daisy and loulou**. You can choose to subscribe as new user.
-	In order to test features you will also find some dummy projects, reviews and tickets.
+	In order to test features you will also find some dummy projects, reviews and tickets:
 
-      `python ./manage.py runserver`
+    `python ./manage.py runserver`
 
-Optionnal - Run app from scratch
+    If you wish to remove any changes and go back the default dummy database:
 
-      `python ./manage.py init_app_litreview`
-	
+    `python ./manage.py init_app_litreview`
+
+    Optionnal - Run app from scratch
+
+      `python ./manage.py reset_app_litreview`
+
+      `python ./manage.py makemigrations`
+
+      `python ./manage.py migrate`
+
       `python ./manage.py runserver`
 
 ## Comment fonctionne l'application ?
@@ -61,7 +69,6 @@ Un utilisateur connecté peut ajouter un ticket, une critique en réponse à un 
 
 Un utilisateur connecté peut accéder à ses seules publications ("posts"). De plus, il peut modifier ou supprimer chacunes d'entre elles.
 
-Une image n'est pas indispensable pour créer un ticket. 
+Une image n'est pas indispensable pour créer un ticket.
 
 Une critique implique une notation graduée de 0 (le plus bas) à 5.
-
