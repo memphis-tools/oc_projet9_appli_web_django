@@ -82,14 +82,21 @@ def change_ticket(request, id):
     """
     ticket = Ticket.objects.get(id=id)
     ticket_creation_form = forms.TicketCreationForm(instance=ticket)
+    form = forms.TicketImageDeleteForm()
     if request.method == "POST":
         ticket_creation_form = forms.TicketCreationForm(request.POST, request.FILES, instance=ticket)
+        ticket_image_remove_form = forms.TicketImageDeleteForm(request.POST, request.FILES)
         if ticket.user == request.user:
-            if ticket_creation_form.is_valid():
-                ticket.save()
-                messages.success(request, message="Ticket mis à jour")
-                return redirect("feed")
-    return render(request, "litreview/change_ticket.html", context={"ticket": ticket})
+            if ticket.image:
+                if ticket_image_remove_form.is_valid():
+                    ticket.image.delete()
+                    messages.success(request, message="Image du ticket supprimée")
+            else:
+                if ticket_creation_form.is_valid():
+                    ticket.save()
+                    messages.success(request, message="Ticket mis à jour")
+                    return redirect("feed")
+    return render(request, "litreview/change_ticket.html", context={"ticket": ticket, "form": form})
 
 
 @login_required
