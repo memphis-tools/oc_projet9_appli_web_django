@@ -34,6 +34,28 @@ class TicketCreationForm(forms.ModelForm):
         fields = ["title", "description", "image"]
 
 
+class TicketImageUpdateForm(forms.ModelForm):
+    """
+    Description: formulaire dédié à la mise à jour d'une image liée à une demande de critique.
+    Paramètre(s):
+    - forms: par défaut, on instancie sur la base d'un modèle de référence
+    """
+    class Meta:
+        model = models.Ticket
+        fields = ["image"]
+
+
+class TicketImageDeleteForm(forms.ModelForm):
+    """
+    Description: formulaire dédié à la suppression d'une image liée à une demande de critique.
+    Paramètre(s):
+    - forms: par défaut, on instancie sur la base d'un modèle de référence
+    """
+    class Meta:
+        model = models.Ticket
+        fields = ["image"]
+
+
 class ReviewCreationForm(forms.ModelForm):
     """
     Description: formulaire dédié à la création d'une demande de critique.

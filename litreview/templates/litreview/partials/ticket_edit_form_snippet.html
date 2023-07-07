@@ -8,8 +8,13 @@
         <label for="description" class="form-label fw-light">Description</label>
         <textarea class="form-control text-start" name="description" rows="8" cols="80">{{ ticket.description }}</textarea>
         <label for="image" class="form-label fw-light">Image</label>
-        <input type="file" name="image" id="btn_img" class="btn_img" hidden>
-        <label class="w-100 w-md-25 btn btn-primary" for="btn_img" onclick="update_chosen_file()">Télécharger fichier</label>
-        <span id="chosen_file">{{ ticket.image }}</span>
+        <input type="file" name="image" id="btn_img" onchange="update_chosen_file()" class="btn_img" hidden>
+        <label class="w-100 w-md-25 btn btn-primary" for="btn_img">Télécharger fichier</label>
+        <div class="px-2 pt-2 pd-2 d-flex flex-column flex-md-row justify-content-center">
+            <span class="d-flex mt-2 md-2 pe-md-3" id="chosen_file">{{ ticket.image }}</span>
+            {% if ticket.image %}
+              <button id="remove_image" class="mb-2 btn btn-primary text-decoration-none px-3" type="submit" name="button">Supprimer image</button>
+            {% endif %}
+        </div>
     </div>
 </div>
