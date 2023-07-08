@@ -83,19 +83,23 @@ def change_ticket(request, id):
     ticket = Ticket.objects.get(id=id)
     ticket_creation_form = forms.TicketCreationForm(instance=ticket)
     form = forms.TicketImageDeleteForm()
-    if request.method == "POST":
-        ticket_creation_form = forms.TicketCreationForm(request.POST, request.FILES, instance=ticket)
-        ticket_image_remove_form = forms.TicketImageDeleteForm(request.POST, request.FILES)
-        if ticket.user == request.user:
-            if ticket.image:
-                if ticket_image_remove_form.is_valid():
-                    ticket.image.delete()
-                    messages.success(request, message="Image du ticket supprimée")
-            else:
-                if ticket_creation_form.is_valid():
-                    ticket.save()
-                    messages.success(request, message="Ticket mis à jour")
-                    return redirect("feed")
+    if request.user.id == ticket.user.id:
+        if request.method == "POST":
+            ticket_creation_form = forms.TicketCreationForm(request.POST, request.FILES, instance=ticket)
+            ticket_image_remove_form = forms.TicketImageDeleteForm(request.POST, request.FILES)
+            if ticket.user == request.user:
+                if ticket.image:
+                    if ticket_image_remove_form.is_valid():
+                        ticket.image.delete()
+                        messages.success(request, message="Image du ticket supprimée")
+                else:
+                    if ticket_creation_form.is_valid():
+                        ticket.save()
+                        messages.success(request, message="Ticket mis à jour")
+                        return redirect("feed")
+    else:
+        messages.error(request, message="Vous n'êtes pas l'auteur du ticket")
+        return redirect("feed")
     return render(request, "litreview/change_ticket.html", context={"ticket": ticket, "form": form})
 
 
@@ -108,12 +112,16 @@ def delete_ticket(request, id):
     - id: un entier qui représente l'id de la demande de critique
     """
     ticket = Ticket.objects.get(id=id)
-    if request.method == "POST":
-        if ticket.user == request.user:
-            ticket.image.delete()
-            ticket.delete()
-            messages.success(request, message="Ticket supprimé")
-            return redirect("feed")
+    if request.user.id == ticket.user.id:
+        if request.method == "POST":
+            if ticket.user == request.user:
+                ticket.image.delete()
+                ticket.delete()
+                messages.success(request, message="Ticket supprimé")
+                return redirect("feed")
+    else:
+        messages.error(request, message="Vous n'êtes pas l'auteur du ticket")
+        return redirect("feed")
     return render(request, "litreview/delete_ticket.html", context={"ticket": ticket})
 
 
@@ -127,13 +135,17 @@ def change_review(request, id):
     """
     review = Review.objects.get(id=id)
     review_creation_form = forms.ReviewCreationForm(instance=review)
-    if request.method == "POST":
-        review_creation_form = forms.ReviewCreationForm(request.POST, request.FILES, instance=review)
-        if review.user == request.user:
-            if review_creation_form.is_valid():
-                review.save()
-                messages.success(request, message="Critique mise à jour")
-                return redirect("feed")
+    if request.user.id == review.user.id:
+        if request.method == "POST":
+            review_creation_form = forms.ReviewCreationForm(request.POST, request.FILES, instance=review)
+            if review.user == request.user:
+                if review_creation_form.is_valid():
+                    review.save()
+                    messages.success(request, message="Critique mise à jour")
+                    return redirect("feed")
+    else:
+        messages.error(request, message="Vous n'êtes pas l'auteur de la critique")
+        return redirect("feed")
     return render(request, "litreview/change_review.html", context={"review": review})
 
 
@@ -147,13 +159,17 @@ def delete_review(request, id):
     """
     review = Review.objects.get(id=id)
     ticket = Ticket.objects.get(id=review.ticket.id)
-    if request.method == "POST":
-        if review.user == request.user:
-            review.delete()
-            ticket.has_been_reviewed = False
-            ticket.save()
-            messages.success(request, message="Critique supprimée")
-            return redirect("feed")
+    if request.user.id == review.user.id:
+        if request.method == "POST":
+            if review.user == request.user:
+                review.delete()
+                ticket.has_been_reviewed = False
+                ticket.save()
+                messages.success(request, message="Critique supprimée")
+                return redirect("feed")
+    else:
+        messages.error(request, message="Vous n'êtes pas l'auteur de la critique")
+        return redirect("feed")
     return render(request, "litreview/delete_review.html", context={"review": review})
 
 
