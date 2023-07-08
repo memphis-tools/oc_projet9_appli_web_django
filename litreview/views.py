@@ -88,15 +88,10 @@ def change_ticket(request, id):
             ticket_creation_form = forms.TicketCreationForm(request.POST, request.FILES, instance=ticket)
             ticket_image_remove_form = forms.TicketImageDeleteForm(request.POST, request.FILES)
             if ticket.user == request.user:
-                if ticket.image:
-                    if ticket_image_remove_form.is_valid():
-                        ticket.image.delete()
-                        messages.success(request, message="Image du ticket supprimée")
-                else:
-                    if ticket_creation_form.is_valid():
-                        ticket.save()
-                        messages.success(request, message="Ticket mis à jour")
-                        return redirect("feed")
+                if ticket_creation_form.is_valid():
+                    ticket.save()
+                    messages.success(request, message="Ticket mis à jour (suppression image non implémentée)")
+                    return redirect("feed")
     else:
         messages.error(request, message="Vous n'êtes pas l'auteur du ticket")
         return redirect("feed")
