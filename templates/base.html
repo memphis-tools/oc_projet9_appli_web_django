@@ -28,10 +28,10 @@
         <div class="pt-5 mt-5 d-flex flex-column justify-content-center align-items-between">
             <nav class="navbar navbar-expand-lg navbar-light bg-white justify-content-center">
                 <div class="mt-5 mb-2 pt-2 pb-2 pt-4 p-md-2 container-fluid border-bottom ">
-                    <a class="navbar-brand position-absolute top-0 start-50 translate-middle pb-0" href="{% url 'feed' %}">
-                        <img id="brand_logo" class="img-fluid" width="75%" src="{% static 'assets/img/logo_litreview_projet9.png' %}" alt="logo image">
-                    </a>
-                    {% if user.is_authenticated %}
+                  {% if user.is_authenticated %}
+                        <a class="navbar-brand position-absolute top-0 start-50 translate-middle pb-0" href="{% url 'feed' %}">
+                            <img id="brand_logo" class="img-fluid" width="75%" src="{% static 'assets/img/logo_litreview_projet9.png' %}" alt="logo image">
+                        </a>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon bg-light"></span>
                         </button>
@@ -51,6 +51,10 @@
                                 </li>
                             </ul>
                         </div>
+                    {% else %}
+                        <a class="navbar-brand position-absolute top-0 start-50 translate-middle pt-4 pb-5" href="{% url 'feed' %}">
+                            <img id="brand_logo" class="img-fluid" width="75%" src="{% static 'assets/img/logo_litreview_projet9.png' %}" alt="logo image">
+                        </a>
                     {% endif %}
                 </div>
             </nav>
