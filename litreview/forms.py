@@ -29,31 +29,19 @@ class TicketCreationForm(forms.ModelForm):
     Paramètre(s):
     - forms: par défaut, on instancie sur la base d'un modèle de référence
     """
+    edit_form = forms.BooleanField(widget=forms.HiddenInput(), initial=True)
     class Meta:
         model = models.Ticket
         fields = ["title", "description", "image"]
 
 
-class TicketImageUpdateForm(forms.ModelForm):
-    """
-    Description: formulaire dédié à la mise à jour d'une image liée à une demande de critique.
-    Paramètre(s):
-    - forms: par défaut, on instancie sur la base d'un modèle de référence
-    """
-    class Meta:
-        model = models.Ticket
-        fields = ["image"]
-
-
-class TicketImageDeleteForm(forms.ModelForm):
+class TicketImageDeleteForm(forms.Form):
     """
     Description: formulaire dédié à la suppression d'une image liée à une demande de critique.
     Paramètre(s):
-    - forms: par défaut, on instancie sur la base d'un modèle de référence
+    - forms: par défaut, on instancie un Form
     """
-    class Meta:
-        model = models.Ticket
-        fields = ["image"]
+    delete_form = forms.BooleanField(widget=forms.HiddenInput, initial=True)
 
 
 class ReviewCreationForm(forms.ModelForm):

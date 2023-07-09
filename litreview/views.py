@@ -6,6 +6,7 @@ from django.db.models import Q
 from django.core.paginator import Paginator
 from django.core.exceptions import ObjectDoesNotExist
 from itertools import chain
+import os
 
 from authentication.models import User, UserFollows
 from litreview.models import Ticket, Review
@@ -82,20 +83,28 @@ def change_ticket(request, id):
     """
     ticket = Ticket.objects.get(id=id)
     ticket_creation_form = forms.TicketCreationForm(instance=ticket)
-    form = forms.TicketImageDeleteForm()
+    ticket_image_delete_form = forms.TicketImageDeleteForm()
     if request.user.id == ticket.user.id:
         if request.method == "POST":
-            ticket_creation_form = forms.TicketCreationForm(request.POST, request.FILES, instance=ticket)
-            ticket_image_remove_form = forms.TicketImageDeleteForm(request.POST, request.FILES)
-            if ticket.user == request.user:
+            original_ticket_image = ticket.image
+            print(original_ticket_image)
+            if "edit_form" in request.POST:
+                ticket_creation_form = forms.TicketCreationForm(request.POST, request.FILES, instance=ticket)
                 if ticket_creation_form.is_valid():
+                    print(request.FILES["image"])
+                    if request.FILES["image"] != original_ticket_image:
+                        os.remove(f"media/{original_ticket_image}")
                     ticket.save()
-                    messages.success(request, message="Ticket mis à jour (suppression image non implémentée)")
+                    messages.success(request, message="Ticket mis à jour")
                     return redirect("feed")
+            if "delete_form" in request.POST:
+                ticket.image.delete()
+                messages.success(request, message="Image ticket supprimée")
     else:
         messages.error(request, message="Vous n'êtes pas l'auteur du ticket")
         return redirect("feed")
-    return render(request, "litreview/change_ticket.html", context={"ticket": ticket, "form": form})
+    context = {"ticket_creation_form": ticket_creation_form, "ticket_image_delete_form": ticket_image_delete_form}
+    return render(request, "litreview/change_ticket.html", context={"ticket": ticket, "context": context})
 
 
 @login_required
