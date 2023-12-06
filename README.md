@@ -1,4 +1,5 @@
-![Screenshot](python-django.svg)
+![Screenshot](https://img.shields.io/badge/python-v3.10-blue?logo=python&logoColor=yellow)
+![Screenshot](https://img.shields.io/badge/django-v4-blue?logo=python&logoColor=yellow)
 # [OpenClassRoom](https://openclassrooms.com/) - Parcours développeur Python
 ![Screenshot](oc_parcours_dev_python.png)
 ## Projet 9 - Développer une application Web en utilisant Django
