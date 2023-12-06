@@ -11,6 +11,9 @@ Application permettant à une communauté d'utilisateurs de consulter ou de soll
 - [x] Utiliser le rendu côté serveur dans Django.
 - [x] Développer une application web en utilisant Django.
 
+![Screenshot](oc_projet9_illutsration1.png)
+![Screenshot](oc_projet9_illutsration2.png)
+
 ## Comment utiliser le projet ?
 1. Clone the repository
 
